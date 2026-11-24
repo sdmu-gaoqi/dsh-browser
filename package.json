@@ -1,5 +1,5 @@
 {
-  "name": "dsh-browser",
+  "name": "@wagq/dsh-browser",
   "version": "0.0.1",
   "description": "Bookmark strip for DeepSeek Harness: a compact bookmark bar on top, a large inline browser below, and a desktop/mobile user agent per bookmark.",
   "keywords": [
@@ -10,7 +10,6 @@
     "webview"
   ],
   "license": "MIT",
-  "private": true,
   "type": "module",
   "main": "./index.js",
   "icon": "./icon.svg",
@@ -19,6 +18,10 @@
     "./client": "./client.js",
     "./locale/*.json": "./locale/*.json",
     "./icon": "./icon.svg"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "files": [
     "index.js",

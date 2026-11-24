@@ -6,7 +6,7 @@
 
 ### 仓库地址
 
-<https://github.com/你的用户名/dsh-browser>
+<https://github.com/sdmu-gaoqi/dsh-browser>
 
 ### 一句话价值
 
@@ -18,15 +18,17 @@
 
 ### 安装命令
 
-当前未发布 NPM 包，按源码安装（装到 **desktop** profile —— 内嵌浏览器依赖桌面端的 guest 桥；`desktop` 换成你实际使用的 profile 名）：
+装到 **desktop** profile —— 内嵌浏览器依赖桌面端的 guest 桥；`desktop` 换成你实际使用的 profile 名。
 
 ```bash
-dsh plugin --profile desktop add github:你的用户名/dsh-browser
+# NPM
+dsh plugin --profile desktop add @wagq/dsh-browser
+
+# 源码（本地改代码时用，等价）
+dsh plugin --profile desktop add github:sdmu-gaoqi/dsh-browser
 ```
 
-> 也可以按商城模板装到 `web` profile：`dsh plugin --profile web add github:你的用户名/dsh-browser`，但纯 Web 版没有 `dshDesktop.browser`，面板只会提示「需要 DSH 桌面端」。
->
-> 想上架插件商城必须先发 NPM 包：`dsh-browser` 这个包名在 npm 上已被占用，请先改名成带 scope 的形式（如 `@你的scope/dsh-browser`）并去掉 `package.json` 里的 `"private": true`，再 `npm publish --access public`；安装命令随之变成 `dsh plugin --profile desktop add @你的scope/dsh-browser`。
+> 也可以装到 `web` profile：`dsh plugin --profile web add @wagq/dsh-browser`，但纯 Web 版没有 `dshDesktop.browser`，面板只会提示「需要 DSH 桌面端」。
 
 ### 兼容与运行要求
 
@@ -38,15 +40,6 @@ dsh plugin --profile desktop add github:你的用户名/dsh-browser
 
 MIT
 
-### 截图 / 演示
-
-| 打开网页 | 移动端 UA |
-|---|---|
-| ![网页](docs/screenshot-page.png) | ![移动端](docs/screenshot-mobile.png) |
-
-| guest 内右键菜单 | 空状态 / 直接输网址 |
-|---|---|
-| ![右键菜单](docs/screenshot-context-menu.png) | ![空状态](docs/screenshot-strip.png) |
 
 ### 补充说明
 
@@ -72,15 +65,6 @@ MIT
   - 站内新窗口请求（`target=_blank`）会被宿主拦截并回传到当前 guest 打开，不会弹新标签。
 - **权限**：不需要额外权限、不需要外部服务、不写入任何远程数据。
 
-### 提交前自查
-
-- [ ] 仓库已公开
-- [ ] 已添加 GitHub topic：dsh-plugin
-- [x] README 包含安装命令
-- [x] 插件导出 apply(ctx) 模块
-- [x] 仓库根目录包含 package.json
-
-> 当前实际状态：本目录是一个**没有任何 commit、也没有 remote** 的本地仓库，`package.json` 仍是 `"private": true`，`npm` 包名 `dsh-browser` 已被他人占用。上架前需要：`git init && git add . && git commit` → 建公开仓库并 push → 仓库 Settings 加 topic `dsh-plugin` → 改 scoped 包名、去掉 `private`、`npm publish --access public`。
 
 ---
 
@@ -91,11 +75,3 @@ MIT
 - 没有打开任何页面时，中间直接给地址输入框，回车即开。
 - 页面控件里的「桌面 / 移动」胶囊就地切换 UA 并重载，同时写回该条书签。
 - `Esc` 依次关闭：管理弹窗 → 当前网页 → 面板。
-
-## 数据与实现
-
-- `index.js`：Host 侧空实现（纯 UI 插件）。
-- `client.js`：书签带、页面控件、管理弹窗、`<webview>` 生命周期、样式表。
-- `locale/`、`icon.svg`、`docs/`：插件展示元数据、图标、截图。
-
-guest 生命周期：`bridge.acquire(account)` 拿 lease/partition → 创建 `<webview name=lease partition=… src=about:blank#lease>` → 挂到常驻 fixed 层（`.bb-lane`）→ `dom-ready` 后 `loadURL`。面板卸载只解绑宿主（隐藏该层），lease 与元素都保留；换设备时重建 guest，点「关闭网页」或插件卸载时 `bridge.release(lease)`。
