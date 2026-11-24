@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "书签导航",
+    "description": "左侧边栏「书签导航」：顶部一条书签带，下面整块区域就是内嵌浏览器（真正的 Electron webview，与 DSH 内置浏览器同一 guest 机制）。每个书签可单独选桌面或移动端 UA，工具栏一键切换；带后退/前进/刷新/地址栏与页面内右键菜单。",
+    "detail": "docs/DETAIL.zh.md"
+  }
+}

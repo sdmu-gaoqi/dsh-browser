@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Bookmark bar",
+    "description": "A Bookmarks entry in the left sidebar: one compact bookmark strip on top and a large inline browser below, using a real Electron webview from the same guest bridge as DSH's built-in browser. Every bookmark keeps its own desktop or mobile user agent, switchable from the toolbar, with back/forward/reload, an address bar, and an in-page context menu.",
+    "detail": "docs/DETAIL.md"
+  }
+}
